@@ -12,17 +12,17 @@ contract UpgradeBox is Script {
         address mostRecentlyDeployed = DevOpsTools.get_most_recent_deployment("ERC1967Proxy", block.chainid);
 
         vm.startBroadcast();
-        BoxV2 box = new BoxV2();
+        BoxV2 newBox = new BoxV2();
         vm.stopBroadcast();
 
-        address proxy = upgradeBox(mostRecentlyDeployed, address(box));
+        address proxy = upgradeBox(mostRecentlyDeployed, address(newBox));
         return proxy;
     }
 
     function upgradeBox(address proxyAddress, address newBox) public returns (address) {
         vm.startBroadcast();
         BoxV1 proxy = BoxV1(proxyAddress);
-        proxy.upgradeTo(newBox);
+        proxy.upgradeToAndCall(newBox, "");
         vm.stopBroadcast();
         return address(proxy);
     }
