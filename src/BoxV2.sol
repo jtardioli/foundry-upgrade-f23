@@ -10,7 +10,6 @@ contract BoxV2 is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 
     constructor() {
         _disableInitializers();
-        __UUPSUpgradeable_init();
     }
 
     function initialize() public initializer {
